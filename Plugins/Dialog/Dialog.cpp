@@ -378,6 +378,8 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
             spkrs.push_back(pDialog->m_pSpeakerMap[i]);
         }
 
+        if (spkrs.size() == 0) LOG_DEBUG("No speakers detected.");
+
         for (auto s : spkrs) {
             LOG_DEBUG("Dialog speaker detected: %s (%i).", s.m_sSpeaker.CStr(), s.m_id);
         }
