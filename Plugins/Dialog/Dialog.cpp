@@ -183,6 +183,7 @@ Dialog::Dialog(const Plugin::CreateParams& params)
     REGISTER(GetCurrentNodeText);
     REGISTER(SetCurrentNodeText);
     REGISTER(End);
+    REGISTER(SetNPCSpeaker);
 
 #undef REGISTER
 
