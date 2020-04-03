@@ -371,7 +371,7 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
     //if (state == DIALOG_STATE_START) pDialog->m_pEntries[pDialog->m_pStartingEntries[loopCount].m_nIndex].m_sSpeaker = oidObject;
     if (state == DIALOG_STATE_SEND_ENTRY) 
     {
-        
+        LOG_ERROR("Is this even working?");
         //Get the speaker map.        
         std::vector<CNWSDialogSpeaker> spkrs;
         for (uint32_t i = 0; i < pDialog->m_nSpeakerMap; ++i) {
