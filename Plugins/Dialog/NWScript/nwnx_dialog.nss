@@ -75,6 +75,10 @@ void NWNX_Dialog_SetCurrentNodeText(string text, int language=NWNX_DIALOG_LANGUA
 /// @param oObject The object in a conversation
 void NWNX_Dialog_End(object oObject);
 
+/// @brief Set the speaker for any given line of text spoken by an NPC
+/// @note This will not work for a reply node.
+/// @param oObject The object in a conversation
+void NWNX_Dialog_SetNPCSpeaker(object oNPCSpeaker);
 /// @}
 
 
@@ -133,6 +137,14 @@ void NWNX_Dialog_SetCurrentNodeText(string text, int language=NWNX_DIALOG_LANGUA
 void NWNX_Dialog_End(object oObject)
 {
     string sFunc = "End";
+
+    NWNX_PushArgumentObject(NWNX_Dialog, sFunc, oObject);
+    NWNX_CallFunction(NWNX_Dialog, sFunc);
+}
+
+void NWNX_Dialog_SetNPCSpeaker(object oObject)
+{
+    string sFunc = "SetNPCSpeaker";
 
     NWNX_PushArgumentObject(NWNX_Dialog, sFunc, oObject);
     NWNX_CallFunction(NWNX_Dialog, sFunc);
