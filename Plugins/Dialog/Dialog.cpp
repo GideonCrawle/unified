@@ -364,32 +364,26 @@ ArgumentStack Dialog::End(ArgumentStack&& args)
 
 ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
 {
+    LOG_DEBUG("SetNPCSpeaker called...");
+
     auto oidObject = Services::Events::ExtractArgument<Types::ObjectID >(args);
     ASSERT_OR_THROW(oidObject != Constants::OBJECT_INVALID);
 
     auto state = statestack[ssp];
-    //if (state == DIALOG_STATE_START) pDialog->m_pEntries[pDialog->m_pStartingEntries[loopCount].m_nIndex].m_sSpeaker = oidObject;
-    //if (state == DIALOG_STATE_HANDLE_REPLY)
-    //{
-        std::cout << "Is this even working?" << std::endl;
-        //Get the speaker map.        
-        std::vector<CNWSDialogSpeaker> spkrs;
-        for (uint32_t i = 0; i < pDialog->m_nSpeakerMap; ++i) {
-            spkrs.push_back(pDialog->m_pSpeakerMap[i]);
-        }
-
-        if (spkrs.size() == 0) LOG_DEBUG("No speakers detected.");
-
-        for (auto s : spkrs) {
+    //Get the speaker map.        
+    std::vector<CNWSDialogSpeaker> spkrs;
+    for (uint32_t i = 0; i < pDialog->m_nSpeakerMap; ++i) spkrs.push_back(pDialog->m_pSpeakerMap[i]);
+    if (spkrs.size() == 0) LOG_DEBUG("No speakers detected.");
+    else
+    {
+        for (auto s : spkrs)
+        {
             LOG_DEBUG("Dialog speaker detected: %s (%i).", s.m_sSpeaker.CStr(), s.m_id);
         }
-        
-        pDialog->m_pEntries[idxEntry].m_sSpeaker = oidObject;
-
     }
+    pDialog->m_pEntries[idxEntry].m_sSpeaker = oidObject;
 
-    //return Services::Events::Arguments();
+    return Services::Events::Arguments();
 }
-
 
 }
