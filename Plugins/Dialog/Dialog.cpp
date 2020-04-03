@@ -376,13 +376,13 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
     if (spkrs.size() == 0) LOG_DEBUG("%i speakers detected in map.", pDialog->m_nSpeakerMap);
     else
     {
-        for (auto s : spkrs)
-        {
-            LOG_DEBUG("Dialog speaker detected in map: %s (%i).", s.m_sSpeaker.CStr(), s.m_id);
-        }
+        for (auto s : spkrs) LOG_DEBUG("Dialog speaker detected in map: %s (%i).", s.m_sSpeaker.CStr(), s.m_id);
     }    
 
     LOG_DEBUG("m_sSpeaker was %s.", pDialog->m_pEntries[idxEntry].m_sSpeaker.CStr());
+    LOG_DEBUG("");
+    pDialog->
+
 
     return Services::Events::Arguments();
 }
