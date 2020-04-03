@@ -373,15 +373,17 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
     //Get the speaker map.        
     std::vector<CNWSDialogSpeaker> spkrs;
     for (uint32_t i = 0; i < pDialog->m_nSpeakerMap; ++i) spkrs.push_back(pDialog->m_pSpeakerMap[i]);
-    if (spkrs.size() == 0) LOG_DEBUG("No speakers detected.");
+    if (spkrs.size() == 0) LOG_DEBUG("%i speakers detected in map.", pDialog->m_nSpeakerMap);
     else
     {
         for (auto s : spkrs)
         {
-            LOG_DEBUG("Dialog speaker detected: %s (%i).", s.m_sSpeaker.CStr(), s.m_id);
+            LOG_DEBUG("Dialog speaker detected in map: %s (%i).", s.m_sSpeaker.CStr(), s.m_id);
         }
     }
-    pDialog->m_pEntries[idxEntry].m_sSpeaker = oidObject;
+
+    LOG_DEBUG("m_speaker is %s", pDialog->m_pEntries[idxEntry].m_sSpeaker);
+    
 
     return Services::Events::Arguments();
 }
