@@ -382,7 +382,7 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
         }
     }
 
-    LOG_DEBUG("m_speaker is %s", pDialog->m_pEntries[idxEntry].m_sSpeaker);
+    LOG_DEBUG("m_speaker is %s", pDialog->m_pReplies[idxReply].m_sSpeaker);
     
 
     return Services::Events::Arguments();
