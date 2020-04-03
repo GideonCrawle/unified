@@ -369,7 +369,7 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
     auto oidObject = Services::Events::ExtractArgument<Types::ObjectID >(args);
     ASSERT_OR_THROW(oidObject != Constants::OBJECT_INVALID);
 
-    auto state = statestack[ssp];
+    //auto state = statestack[ssp];
     //Get the speaker map.        
     std::vector<CNWSDialogSpeaker> spkrs;
     for (uint32_t i = 0; i < pDialog->m_nSpeakerMap; ++i) spkrs.push_back(pDialog->m_pSpeakerMap[i]);
@@ -381,6 +381,8 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
             LOG_DEBUG("Dialog speaker detected in map: %s (%i).", s.m_sSpeaker.CStr(), s.m_id);
         }
     }    
+
+    LOG_DEBUG("m_sSpeaker was %s.", pDialog->m_pEntries[idxEntry].m_sSpeaker.CStr());
 
     return Services::Events::Arguments();
 }
