@@ -380,10 +380,7 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
         {
             LOG_DEBUG("Dialog speaker detected in map: %s (%i).", s.m_sSpeaker.CStr(), s.m_id);
         }
-    }
-
-    LOG_DEBUG("m_speaker is %s", pDialog->m_pReplies[idxReply].m_sSpeaker);
-    
+    }    
 
     return Services::Events::Arguments();
 }
