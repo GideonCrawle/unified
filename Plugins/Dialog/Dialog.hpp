@@ -47,6 +47,7 @@ private:
     ArgumentStack GetCurrentNodeText   (ArgumentStack&& args);
     ArgumentStack SetCurrentNodeText   (ArgumentStack&& args);
     ArgumentStack End                  (ArgumentStack&& args);
+    ArgumentStack SetNPCSpeaker        (ArgumentStack&& args);
 };
 
 }

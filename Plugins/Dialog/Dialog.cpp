@@ -8,6 +8,7 @@
 #include "API/CNWSDialogReply.hpp"
 #include "API/CNWSDialogLinkEntry.hpp"
 #include "API/CNWSDialogLinkReply.hpp"
+#include "API/CNWSDialogSpeaker.hpp"
 #include "API/CExoLocString.hpp"
 #include "API/CExoString.hpp"
 #include "API/CResRef.hpp"
@@ -359,5 +360,33 @@ ArgumentStack Dialog::End(ArgumentStack&& args)
 
     return Services::Events::Arguments();
 }
+
+ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
+{
+    auto oidObject = Services::Events::ExtractArgument<Types::ObjectID >(args);
+    ASSERT_OR_THROW(oidObject != Constants::OBJECT_INVALID);
+
+    auto state = statestack[ssp];
+    //if (state == DIALOG_STATE_START) pDialog->m_pEntries[pDialog->m_pStartingEntries[loopCount].m_nIndex].m_sSpeaker = oidObject;
+    if (state == DIALOG_STATE_SEND_ENTRY) 
+    {
+        
+        //Get the speaker map.        
+        std::vector<CNWSDialogSpeaker> spkrs;
+        for (int i = 0; i < pDialog->m_nSpeakerMap; ++i) {
+            spkrs.push_back(pDialog->m_pSpeakerMap[i]);
+        }
+
+        for (auto s : spkrs) {
+            LOG_DEBUG("Dialog speaker detected: " + s.m_sSpeaker + " (" + std::to_string(s.m_id) + ").");
+        }
+        
+        pDialog->m_pEntries[idxEntry].m_sSpeaker = oidObject;
+
+    }
+
+    return Services::Events::Arguments();
+}
+
 
 }
