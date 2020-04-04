@@ -63,6 +63,10 @@ Dialog::State Dialog::statestack[16];
 int32_t Dialog::ssp;
 CNWSDialog *Dialog::pDialog;
 CNWSObject *Dialog::pOwner;
+
+CNWSObject* Dialog::newSpeaker;
+static Hooking::FunctionHook* Dialog::m_GetSpeakerHook;
+
 uint32_t Dialog::idxEntry;
 uint32_t Dialog::idxReply;
 int32_t  Dialog::scriptType;
@@ -89,6 +93,23 @@ void Dialog::Hooks::GetStartEntryOneLiner(bool before, CNWSDialog *pThis,
     if (before)
         statestack[++ssp] = DIALOG_STATE_START;
     else ssp--;
+}
+
+CNWSObject* Dialog::Hooks::GetSpeaker(CNWSDialog*pThis, 
+    CNWSObject* pNWSObjectOwner, const CExoString& sSpeaker)
+{
+    LOG_DEBUG("GetSpeaker called!");
+    pDialog = pThis;
+    pOwner = pNWSObjectOwner;
+    CNWSObject* retVal;
+    if (newSpeaker) 
+    {
+        retVal = newSpeaker;
+
+        newSpeaker = nullptr;
+        return retVal;
+    }
+    g_plugin->m_GetSpeakerHook.CallOriginal(pNWSObjectOwner, sSpeaker);
 }
 
 void Dialog::Hooks::SendDialogEntry(bool before, CNWSDialog *pThis,
@@ -169,6 +190,8 @@ void Dialog::Hooks::RunScript(bool before, CNWSDialog *pThis,
         scriptType = SCRIPT_TYPE_OTHER;
 }
 
+
+
 Dialog::Dialog(const Plugin::CreateParams& params)
     : Plugin(params)
 {
@@ -208,6 +231,11 @@ Dialog::Dialog(const Plugin::CreateParams& params)
     GetServices()->m_hooks->RequestSharedHook
         <Functions::_ZN10CNWSDialog9RunScriptEP10CNWSObjectRK7CResRef,
         void, CNWSDialog *, CNWSObject*, const CResRef*>(&Hooks::RunScript);
+    GetServices()->m_hooks->RequestExclusiveHook
+        <Functions::_ZN10CNWSDialog10GetSpeakerEP10CNWSObjectRK10CExoString,
+        CNWSDialog*, CNWSObject*, CExoString*>(&Hooks::GetSpeaker);
+
+    m_GetSpeakerHook = GetServices()->m_hooks->FindHookByAddress(Functions::_ZN10CNWSDialog10GetSpeakerEP10CNWSObjectRK10CExoString);
 }
 
 Dialog::~Dialog()
@@ -368,21 +396,6 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
 
     auto oidObject = Services::Events::ExtractArgument<Types::ObjectID >(args);
     ASSERT_OR_THROW(oidObject != Constants::OBJECT_INVALID);
-
-    //auto state = statestack[ssp];
-    //Get the speaker map.        
-    std::vector<CNWSDialogSpeaker> spkrs;
-    for (uint32_t i = 0; i < pDialog->m_nSpeakerMap; ++i) spkrs.push_back(pDialog->m_pSpeakerMap[i]);
-    if (spkrs.size() == 0) LOG_DEBUG("%i speakers detected in map.", pDialog->m_nSpeakerMap);
-    else
-    {
-        for (auto s : spkrs) LOG_DEBUG("Dialog speaker detected in map: %s (%i).", s.m_sSpeaker.CStr(), s.m_id);
-    }    
-
-    LOG_DEBUG("m_sSpeaker was %s.", pDialog->m_pEntries[idxEntry].m_sSpeaker.CStr());
-    LOG_DEBUG("");
-    pDialog->
-
 
     return Services::Events::Arguments();
 }
