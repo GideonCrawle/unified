@@ -95,23 +95,6 @@ void Dialog::Hooks::GetStartEntryOneLiner(bool before, CNWSDialog *pThis,
     else ssp--;
 }
 
-CNWSObject* Dialog::Hooks::GetSpeaker(CNWSDialog*pThis, 
-    CNWSObject* pNWSObjectOwner, const CExoString& sSpeaker)
-{
-    LOG_DEBUG("GetSpeaker called!");
-    pDialog = pThis;
-    pOwner = pNWSObjectOwner;
-    CNWSObject* retVal;
-    if (newSpeaker) 
-    {
-        retVal = newSpeaker;
-
-        newSpeaker = nullptr;
-        return retVal;
-    }
-    return g_plugin->m_GetSpeakerHook->CallOriginal<CNWSObject*>(pNWSObjectOwner, sSpeaker);
-}
-
 void Dialog::Hooks::SendDialogEntry(bool before, CNWSDialog *pThis,
     CNWSObject* pNWSObjectOwner, uint32_t nPlayerIdGUIOnly, uint32_t iEntry, int32_t bPlayHelloSound)
 {
@@ -190,7 +173,22 @@ void Dialog::Hooks::RunScript(bool before, CNWSDialog *pThis,
         scriptType = SCRIPT_TYPE_OTHER;
 }
 
+CNWSObject* Dialog::Hooks::GetSpeaker(CNWSDialog* pThis,
+    CNWSObject* pNWSObjectOwner, const CExoString& sSpeaker)
+{
+    LOG_DEBUG("GetSpeaker called!");
+    pDialog = pThis;
+    pOwner = pNWSObjectOwner;
+    CNWSObject* retVal;
+    if (newSpeaker)
+    {
+        retVal = newSpeaker;
 
+        newSpeaker = nullptr;
+        return retVal;
+    }
+    return g_plugin->m_GetSpeakerHook->CallOriginal<CNWSObject*>(pNWSObjectOwner, sSpeaker);
+}
 
 Dialog::Dialog(const Plugin::CreateParams& params)
     : Plugin(params)
@@ -233,7 +231,7 @@ Dialog::Dialog(const Plugin::CreateParams& params)
         void, CNWSDialog *, CNWSObject*, const CResRef*>(&Hooks::RunScript);
     GetServices()->m_hooks->RequestExclusiveHook
         <Functions::_ZN10CNWSDialog10GetSpeakerEP10CNWSObjectRK10CExoString,
-        CNWSDialog*, CNWSObject*, const CExoString&>(&Hooks::GetSpeaker);
+        CNWSObject*, const CExoString&>(&Hooks::GetSpeaker);
 
     m_GetSpeakerHook = GetServices()->m_hooks->FindHookByAddress(Functions::_ZN10CNWSDialog10GetSpeakerEP10CNWSObjectRK10CExoString);
 }
