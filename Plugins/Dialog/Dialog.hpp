@@ -38,7 +38,7 @@ private:
     static CNWSObject *pOwner;
 
     static CNWSObject *newSpeaker;
-    static Hooking::FunctionHook* m_GetSpeakerHook;
+    static NWNXLib::Hooking::FunctionHook* m_GetSpeakerHook;
 
     static uint32_t idxEntry;
     static uint32_t idxReply;
