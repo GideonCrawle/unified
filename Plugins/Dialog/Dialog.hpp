@@ -19,6 +19,7 @@ private:
     struct Hooks {
         static void GetStartEntry(bool, CNWSDialog *pThis, CNWSObject* pNWSObjectOwner);
         static void GetStartEntryOneLiner(bool, CNWSDialog *pThis, CNWSObject* pNWSObjectOwner, CExoLocString* sOneLiner, CResRef* sSound, CResRef* sScript);
+        static CNWSObject* GetSpeaker(CNWSDialog* pThis, CNWSObject* pNWSObjectOwner, const CExoString& sSpeaker);
         static void SendDialogEntry(bool, CNWSDialog *pThis, CNWSObject* pNWSObjectOwner, uint32_t nPlayerIdGUIOnly, uint32_t iEntry, int32_t bPlayHelloSound);
         static void SendDialogReplies(bool, CNWSDialog *pThis, CNWSObject* pNWSObjectOwner, uint32_t nPlayerIdGUIOnly);
         static void HandleReply(bool, CNWSDialog *pThis, uint32_t nPlayerID, CNWSObject* pNWSObjectOwner, uint32_t nReplyIndex, int32_t bEscapeDialog, uint32_t currentEntryIndex);
@@ -35,10 +36,15 @@ private:
     static int32_t ssp;
     static CNWSDialog *pDialog;
     static CNWSObject *pOwner;
+
+    static CNWSObject *newSpeaker;
+    static Hooking::FunctionHook* m_GetSpeakerHook;
+
     static uint32_t idxEntry;
     static uint32_t idxReply;
     static int32_t  scriptType;
     static int32_t  loopCount;
+
 
     ArgumentStack GetCurrentNodeType   (ArgumentStack&& args);
     ArgumentStack GetCurrentScriptType (ArgumentStack&& args);
