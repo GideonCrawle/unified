@@ -109,7 +109,7 @@ CNWSObject* Dialog::Hooks::GetSpeaker(CNWSDialog*pThis,
         newSpeaker = nullptr;
         return retVal;
     }
-    g_plugin->m_GetSpeakerHook->CallOriginal(pNWSObjectOwner, sSpeaker);
+    return g_plugin->m_GetSpeakerHook->CallOriginal<CNWSObject*>(pNWSObjectOwner, sSpeaker);
 }
 
 void Dialog::Hooks::SendDialogEntry(bool before, CNWSDialog *pThis,
