@@ -65,7 +65,7 @@ CNWSDialog *Dialog::pDialog;
 CNWSObject *Dialog::pOwner;
 
 CNWSObject* Dialog::newSpeaker;
-static Hooking::FunctionHook* Dialog::m_GetSpeakerHook;
+NWNXLib::Hooking::FunctionHook* Dialog::m_GetSpeakerHook;
 
 uint32_t Dialog::idxEntry;
 uint32_t Dialog::idxReply;
