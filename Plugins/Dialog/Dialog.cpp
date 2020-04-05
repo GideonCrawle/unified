@@ -229,11 +229,13 @@ Dialog::Dialog(const Plugin::CreateParams& params)
     GetServices()->m_hooks->RequestSharedHook
         <Functions::_ZN10CNWSDialog9RunScriptEP10CNWSObjectRK7CResRef,
         void, CNWSDialog *, CNWSObject*, const CResRef*>(&Hooks::RunScript);
-    GetServices()->m_hooks->RequestExclusiveHook
+    /*GetServices()->m_hooks->RequestExclusiveHook
         <Functions::_ZN10CNWSDialog10GetSpeakerEP10CNWSObjectRK10CExoString,
-        CNWSObject*, const CExoString&>(&Hooks::GetSpeaker);
+        CNWSObject*, const CExoString&>(&Hooks::GetSpeaker);*/
+    GetServices()->m_hooks->RequestExclusiveHook<Functions::_ZN10CNWSDialog10GetSpeakerEP10CNWSObjectRK10CExoString>(&Hooks::GetSpeaker);
 
     m_GetSpeakerHook = GetServices()->m_hooks->FindHookByAddress(Functions::_ZN10CNWSDialog10GetSpeakerEP10CNWSObjectRK10CExoString);
+    
 }
 
 Dialog::~Dialog()
