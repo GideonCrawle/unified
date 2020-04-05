@@ -64,7 +64,7 @@ int32_t Dialog::ssp;
 CNWSDialog *Dialog::pDialog;
 CNWSObject *Dialog::pOwner;
 
-uint32_t Dialog::newSpeaker;
+uint32_t Dialog::newSpeaker = Constants::OBJECT_INVALID;
 NWNXLib::Hooking::FunctionHook* Dialog::m_GetSpeakerHook;
 
 uint32_t Dialog::idxEntry;
