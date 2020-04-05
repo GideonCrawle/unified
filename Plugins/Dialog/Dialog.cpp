@@ -64,7 +64,7 @@ int32_t Dialog::ssp;
 CNWSDialog *Dialog::pDialog;
 CNWSObject *Dialog::pOwner;
 
-CNWSObject* Dialog::newSpeaker;
+uint32_t Dialog::newSpeaker 
 NWNXLib::Hooking::FunctionHook* Dialog::m_GetSpeakerHook;
 
 uint32_t Dialog::idxEntry;
@@ -176,16 +176,14 @@ void Dialog::Hooks::RunScript(bool before, CNWSDialog *pThis,
 CNWSObject* Dialog::Hooks::GetSpeaker(CNWSDialog* pThis,
     CNWSObject* pNWSObjectOwner, const CExoString& sSpeaker)
 {
-    LOG_DEBUG("GetSpeaker called!");
     pDialog = pThis;
     pOwner = pNWSObjectOwner;
-    CNWSObject* retVal;
-    if (newSpeaker)
-    {
-        retVal = newSpeaker;
 
-        newSpeaker = nullptr;
-        return retVal;
+    LOG_DEBUG("GetSpeaker called!");
+    if (auto* pObject = Utils::AsNWSObject(Utils::GetGameObject(g_plugin->newSpeaker)))
+    {        
+        g_plugin->newSpeaker = Constants::OBJECT_INVALID;
+        return pObject;
     }
     return g_plugin->m_GetSpeakerHook->CallOriginal<CNWSObject*>(pNWSObjectOwner, sSpeaker);
 }
@@ -225,13 +223,10 @@ Dialog::Dialog(const Plugin::CreateParams& params)
             int32_t, CNWSDialog*, uint32_t , CNWSObject*, uint32_t, int32_t, uint32_t>(&Hooks::HandleReply);
     GetServices()->m_hooks->RequestSharedHook
         <Functions::_ZN10CNWSDialog11CheckScriptEP10CNWSObjectRK7CResRef,
-        int32_t, CNWSDialog *, CNWSObject*, const CResRef*>(&Hooks::CheckScript);
+            int32_t, CNWSDialog *, CNWSObject*, const CResRef*>(&Hooks::CheckScript);
     GetServices()->m_hooks->RequestSharedHook
         <Functions::_ZN10CNWSDialog9RunScriptEP10CNWSObjectRK7CResRef,
-        void, CNWSDialog *, CNWSObject*, const CResRef*>(&Hooks::RunScript);
-    /*GetServices()->m_hooks->RequestExclusiveHook
-        <Functions::_ZN10CNWSDialog10GetSpeakerEP10CNWSObjectRK10CExoString,
-        CNWSObject*, const CExoString&>(&Hooks::GetSpeaker);*/
+            void, CNWSDialog *, CNWSObject*, const CResRef*>(&Hooks::RunScript);
     GetServices()->m_hooks->RequestExclusiveHook<Functions::_ZN10CNWSDialog10GetSpeakerEP10CNWSObjectRK10CExoString>(&Hooks::GetSpeaker);
 
     m_GetSpeakerHook = GetServices()->m_hooks->FindHookByAddress(Functions::_ZN10CNWSDialog10GetSpeakerEP10CNWSObjectRK10CExoString);
@@ -393,9 +388,7 @@ ArgumentStack Dialog::End(ArgumentStack&& args)
 ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
 {
     LOG_DEBUG("SetNPCSpeaker called...");
-
-    auto oidObject = Services::Events::ExtractArgument<Types::ObjectID >(args);
-    ASSERT_OR_THROW(oidObject != Constants::OBJECT_INVALID);
+    g_plugin->newSpeaker = Services::Events::ExtractArgument<Types::ObjectID>(args);    
 
     return Services::Events::Arguments();
 }
