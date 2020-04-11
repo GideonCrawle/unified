@@ -393,10 +393,13 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
     int numSpeakers = g_plugin->pDialog->m_nSpeakerMap;
     auto* map = g_plugin->pDialog->m_pSpeakerMap;
 
-    for (int i = 0; i < numSpeakers; ++i) {
-        CNWSObject* pObject = Utils::AsNWSObject(Utils::GetGameObject(map[i].m_id));
-        LOG_DEBUG("Object detected with tag %s", pObject->m_sTag);
+    if (numSpeakers) {
+        for (int i = 0; i < numSpeakers; ++i) {
+            CNWSObject* pObject = Utils::AsNWSObject(Utils::GetGameObject(map[i].m_id));
+            LOG_DEBUG("Object detected with tag %s", pObject->m_sTag);
+        }
     }
+    else LOG_DEBUG("No speakers detected by SetNPCSpeaker.");
 
     return Services::Events::Arguments();
 }
