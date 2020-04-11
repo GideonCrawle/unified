@@ -390,7 +390,25 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
     ASSERT_OR_THROW(oidObject != Constants::OBJECT_INVALID);
     
     g_plugin->newSpeaker = oidObject;
-
+    uint32_t numSpeakers = pDialog->m_nSpeakerMap;
+    auto* pSpeakers = pDialog->m_pSpeakerMap;
+    if (pSpeakers != nullptr)
+    {
+        LOG_DEBUG("pSpeakers was nullptr!");
+        /*CNWSDialogSpeaker* speakerMap = pDialog->m_pSpeakerMap;
+        bool included = false;
+        for (int i = 0; i < numSpeakers; ++i) if (speakerMap[i].m_id != oidObject) 
+        if (!included) 
+        {            
+            CNWSDialogSpeaker* newArray = new CNWSDialogSpeaker[numSpeakers];
+            for (int i = 0; i < numSpeakers; ++i)
+        } */           
+    }
+    else 
+    {
+        auto speaker = pSpeakers[0];
+        LOG_DEBUG("Found speaker with tag %s", speaker.m_sSpeaker);
+    }
     return Services::Events::Arguments();
 }
 
