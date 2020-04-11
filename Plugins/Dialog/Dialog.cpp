@@ -10,6 +10,7 @@
 #include "API/CNWSDialogLinkReply.hpp"
 #include "API/CNWSDialogSpeaker.hpp"
 #include "API/CExoLocString.hpp"
+#include "API/CExoLinkedList.hpp"
 #include "API/CExoString.hpp"
 #include "API/CResRef.hpp"
 #include "API/Constants.hpp"
