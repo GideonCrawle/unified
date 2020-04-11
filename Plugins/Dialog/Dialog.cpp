@@ -392,7 +392,7 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
     g_plugin->newSpeaker = oidObject;
     uint32_t numSpeakers = pDialog->m_nSpeakerMap;
     auto* pSpeakers = pDialog->m_pSpeakerMap;
-    if (pSpeakers != nullptr)
+    if (pSpeakers != NULL)
     {
         LOG_DEBUG("pSpeakers was nullptr!");
         /*CNWSDialogSpeaker* speakerMap = pDialog->m_pSpeakerMap;
