@@ -394,15 +394,9 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
     auto* pSpeakers = pDialog->m_pSpeakerMap;
     if (pSpeakers == nullptr)
     {
-        LOG_DEBUG("pSpeakers was nullptr!");
-        /*CNWSDialogSpeaker* speakerMap = pDialog->m_pSpeakerMap;
-        bool included = false;
-        for (int i = 0; i < numSpeakers; ++i) if (speakerMap[i].m_id != oidObject) 
-        if (!included) 
-        {            
-            CNWSDialogSpeaker* newArray = new CNWSDialogSpeaker[numSpeakers];
-            for (int i = 0; i < numSpeakers; ++i)
-        } */           
+        pSpeakers = new CNWSDialogSpeaker;
+        pSpeakers->m_id = oidObject;
+        pSpeakers->m_sSpeaker = Utils::AsNWSObject(Utils::GetGameObject(oidObject)).m_sTag;
     }
     else 
     {
