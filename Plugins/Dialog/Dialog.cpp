@@ -388,7 +388,15 @@ ArgumentStack Dialog::End(ArgumentStack&& args)
 ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
 {
     LOG_DEBUG("SetNPCSpeaker called...");
-    g_plugin->newSpeaker = Services::Events::ExtractArgument<Types::ObjectID>(args);    
+    g_plugin->newSpeaker = Services::Events::ExtractArgument<Types::ObjectID>(args);
+
+    int numSpeakers = g_plugin->pDialog->m_nSpeakerMap;
+    auto* map = g_plugin->pDialog->m_pSpeakerMap;
+
+    for (int i = 0; i < numSpeakers; ++i) {
+        CNWSObject* pObject = Utils::AsNWSObject(Utils::GetGameObject(map[i].m_id));
+        LOG_DEBUG("Object detected with name %s %s.", pObject->GetFirstName().GetStringInternal(), pObject->GetLastName().GetStringInternal());
+    }
 
     return Services::Events::Arguments();
 }
