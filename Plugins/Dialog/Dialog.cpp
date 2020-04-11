@@ -396,7 +396,7 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
     {
         pSpeakers = new CNWSDialogSpeaker;
         pSpeakers->m_id = oidObject;
-        pSpeakers->m_sSpeaker = Utils::AsNWSObject(Utils::GetGameObject(oidObject)).m_sTag;
+        pSpeakers->m_sSpeaker = Utils::AsNWSObject(Utils::GetGameObject(oidObject))->m_sTag;
     }
     else 
     {
