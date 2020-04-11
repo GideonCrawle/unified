@@ -179,7 +179,6 @@ CNWSObject* Dialog::Hooks::GetSpeaker(CNWSDialog* pThis,
     pDialog = pThis;
     pOwner = pNWSObjectOwner;
 
-    LOG_DEBUG("GetSpeaker called!");
     if (auto* pObject = Utils::AsNWSObject(Utils::GetGameObject(g_plugin->newSpeaker)))
     {        
         g_plugin->newSpeaker = Constants::OBJECT_INVALID;
@@ -387,8 +386,10 @@ ArgumentStack Dialog::End(ArgumentStack&& args)
 
 ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
 {
-    LOG_DEBUG("SetNPCSpeaker called...");
-    g_plugin->newSpeaker = Services::Events::ExtractArgument<Types::ObjectID>(args);
+    auto oidObject = Services::Events::ExtractArgument<Types::ObjectID>(args);
+    ASSERT_OR_THROW(oidObject != Constants::OBJECT_INVALID);
+    
+    g_plugin->newSpeaker = oidObject;
 
     return Services::Events::Arguments();
 }

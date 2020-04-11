@@ -75,8 +75,8 @@ void NWNX_Dialog_SetCurrentNodeText(string text, int language=NWNX_DIALOG_LANGUA
 /// @param oObject The object in a conversation
 void NWNX_Dialog_End(object oObject);
 
-/// @brief Set the speaker for any given line of text spoken by an NPC
-/// @note This will not work for a reply node.
+/// @brief Set the speaker for any given entry node text in a conversation
+/// @warning This must be used in a StartConditional script attached to an entry node. Using it outside of an entry node will cause undefined behavior.
 /// @param oObject The object in a conversation
 void NWNX_Dialog_SetNPCSpeaker(object oNPCSpeaker);
 /// @}
