@@ -398,6 +398,11 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
         pSpeakers->m_id = oidObject;
         pSpeakers->m_sSpeaker = Utils::AsNWSObject(Utils::GetGameObject(oidObject))->m_sTag;
         pDialog->m_nSpeakerMap = 1;
+        
+        auto bView = pDialog->m_bMultiPCDialogViewOnly;
+        if (bView) LOG_DEBUG("bView was true!");
+        else LOG_DEBUG("bView was false!");
+        pDialog->m_bMultiPCDialogViewOnly = true;
     }
     else 
     {
