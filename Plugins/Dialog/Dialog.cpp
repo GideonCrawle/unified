@@ -395,7 +395,7 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
 
     for (int i = 0; i < numSpeakers; ++i) {
         CNWSObject* pObject = Utils::AsNWSObject(Utils::GetGameObject(map[i].m_id));
-        LOG_DEBUG("Object detected with name %s %s.", pObject->GetFirstName().GetStringInternal(), pObject->GetLastName().GetStringInternal());
+        LOG_DEBUG("Object detected with name %s %s.", pObject->GetFirstName(), pObject->GetLastName());
     }
 
     return Services::Events::Arguments();
