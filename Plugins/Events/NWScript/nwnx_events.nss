@@ -762,6 +762,15 @@ _______________________________________
     @note Skipping the _BEFORE event will cause no player names to be accepted unless you SetEventResult("1")
 
 _______________________________________
+    ## Server Character Save Events
+    - NWNX_ON_SERVER_CHARACTER_SAVE_BEFORE
+    - NWNX_ON_SERVER_CHARACTER_SAVE_AFTER
+
+    `OBJECT_SELF` = The player character being saved.
+
+    @note This is called once for every character when the server is exiting and when the server is saved, or when ExportSingleCharacter() & ExportAllCharacters() is called.
+
+_______________________________________
     ## Levelling Events
     - NWNX_ON_LEVEL_UP_BEFORE
     - NWNX_ON_LEVEL_UP_AFTER
@@ -869,6 +878,33 @@ _______________________________________
     ----------------------|--------|-------
     TARGET                | object | Convert to object with NWNX_Object_StringToObject()
 
+ _______________________________________
+    ## Input Cast Spell Evens
+    - NWNX_ON_INPUT_CAST_SPELL_BEFORE
+    - NWNX_ON_INPUT_CAST_SPELL_AFTER
+
+    `OBJECT_SELF` = The creature casting a spell
+
+    Event Data Tag        | Type   | Notes
+    ----------------------|--------|-------
+    TARGET                | object | Convert to object with NWNX_Object_StringToObject()
+    SPELL_ID              | int    |
+    MULTICLASS            | int    |
+    DOMAIN_LEVEL          | int    |
+    META_TYPE             | int    |
+    INSTANT               | int    | TRUE / FALSE
+    PROJECTILE_PATH       | int    |
+    SPONTANEOUS           | int    | TRUE / FALSE
+    FAKE                  | int    | TRUE / FALSE
+    FEAT                  | int    | -1 when not cast from a feat
+    CASTER_LEVEL          | int    |
+    IS_AREA_TARGET        | int    | TRUE / FALSE
+    POS_X                 | float  |
+    POS_Y                 | float  |
+    POS_Z                 | float  |
+
+    @note This event runs the moment a creature starts casting
+
 _______________________________________
     ## Object Lock Events
     - NWNX_ON_OBJECT_LOCK_BEFORE
@@ -922,6 +958,16 @@ _______________________________________
     TYPE                  | int    | The type of the file, see NWNX_UTIL_RESREF_TYPE_*
 
     Note: These events fire when a file gets added/removed/modified in the /nwnx or /development folder
+
+_______________________________________
+    ## ELC Events
+    - NWNX_ON_ELC_VALIDATE_CHARACTER_BEFORE
+    - NWNX_ON_ELC_VALIDATE_CHARACTER_AFTER
+
+    `OBJECT_SELF` = The player
+
+    Note: NWNX_ELC must be loaded for these events to work. The `_AFTER` event only fires if the character successfully
+          completes validation.
 
 _______________________________________
 */
@@ -998,6 +1044,7 @@ string NWNX_Events_GetEventData(string tag);
 /// - Barter event (START only)
 /// - Trap events
 /// - Sticky Player Name event
+/// - Server Character Save Events
 /// - Add/RemoveGold events
 /// - PVP Attitude Change events
 /// - {Enter|Exit}Stealth events
