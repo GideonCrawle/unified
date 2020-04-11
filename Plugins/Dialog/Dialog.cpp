@@ -180,19 +180,6 @@ CNWSObject* Dialog::Hooks::GetSpeaker(CNWSDialog* pThis,
     pOwner = pNWSObjectOwner;
 
     LOG_DEBUG("GetSpeaker called!");
-
-    int numSpeakers = g_plugin->pDialog->m_nSpeakerMap;
-    auto* map = g_plugin->pDialog->m_pSpeakerMap;
-
-    if (numSpeakers) {
-        for (int i = 0; i < numSpeakers; ++i) {
-            CNWSObject* pObject = Utils::AsNWSObject(Utils::GetGameObject(map[i].m_id));
-            LOG_DEBUG("Object detected by GetSpeaker with tag %s", pObject->m_sTag);
-        }
-    }
-    else LOG_DEBUG("No speakers detected by GetSpeaker.");
-
-
     if (auto* pObject = Utils::AsNWSObject(Utils::GetGameObject(g_plugin->newSpeaker)))
     {        
         g_plugin->newSpeaker = Constants::OBJECT_INVALID;
@@ -402,17 +389,6 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
 {
     LOG_DEBUG("SetNPCSpeaker called...");
     g_plugin->newSpeaker = Services::Events::ExtractArgument<Types::ObjectID>(args);
-
-    int numSpeakers = g_plugin->pDialog->m_nSpeakerMap;
-    auto* map = g_plugin->pDialog->m_pSpeakerMap;
-
-    if (numSpeakers) {
-        for (int i = 0; i < numSpeakers; ++i) {
-            CNWSObject* pObject = Utils::AsNWSObject(Utils::GetGameObject(map[i].m_id));
-            LOG_DEBUG("Object detected by SetNPCSpeaker with tag %s", pObject->m_sTag);
-        }
-    }
-    else LOG_DEBUG("No speakers detected by SetNPCSpeaker.");
 
     return Services::Events::Arguments();
 }
