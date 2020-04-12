@@ -399,24 +399,15 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
     g_plugin->newSpeaker = oidObject;
     uint32_t numSpeakers = pDialog->m_nSpeakerMap;
     auto* pSpeakers = pDialog->m_pSpeakerMap;
-    if (pSpeakers == nullptr)
-    {
-        pSpeakers = new CNWSDialogSpeaker;
-        pSpeakers->m_id = oidObject;
-        pSpeakers->m_sSpeaker = Utils::AsNWSObject(Utils::GetGameObject(oidObject))->m_sTag;
-        pDialog->m_nSpeakerMap = 1;
-        
-        auto bView = pDialog->m_bMultiPCDialogViewOnly;
-        if (bView) LOG_DEBUG("bView was true!");
-        else LOG_DEBUG("bView was false!");
-        pDialog->m_bMultiPCDialogViewOnly = true;
-        LOG_DEBUG("Number of players: %n", pDialog->m_lPlayers.m_pcExoLinkedListInternal->m_nCount);
-    }
-    else 
-    {
-        auto speaker = pSpeakers[0];
-        LOG_DEBUG("Found speaker with tag %s", speaker.m_sSpeaker);
-    }
+
+    if (pSpeakers != nullptr) delete[] pSpeakers;
+    
+    pSpeakers = new CNWSDialogSpeaker;
+    pSpeakers->m_id = oidObject;
+    pSpeakers->m_sSpeaker = Utils::AsNWSObject(Utils::GetGameObject(oidObject))->m_sTag;
+    pDialog->m_nSpeakerMap = 1;
+       
+
     return Services::Events::Arguments();
 }
 
