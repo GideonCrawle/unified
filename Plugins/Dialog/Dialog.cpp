@@ -411,7 +411,6 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
         else LOG_DEBUG("bView was false!");
         pDialog->m_bMultiPCDialogViewOnly = true;
         LOG_DEBUG("Number of players: %n", pDialog->m_lPlayers.m_pcExoLinkedListInternal->m_nCount);
-        pDialog->
     }
     else 
     {
