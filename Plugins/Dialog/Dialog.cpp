@@ -107,6 +107,8 @@ void Dialog::Hooks::SendDialogEntry(bool before, CNWSDialog *pThis,
     {
         statestack[++ssp] = DIALOG_STATE_SEND_ENTRY;
         idxEntry = iEntry;
+        pDialog->m_pEntries[idxEntry].m_sSpeaker = Utils::AsNWSObject(Utils::GetGameObject(g_plugin->newSpeaker)).m_sTag;
+        LOG_DEBUG("Speaker set to %s", pDialog->m_pEntries[idxEntry].m_sSpeaker);
     }
     else ssp--;
 }
@@ -405,6 +407,7 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
         else LOG_DEBUG("bView was false!");
         pDialog->m_bMultiPCDialogViewOnly = true;
         LOG_DEBUG("Number of players: %n", pDialog->m_lPlayers.m_pcExoLinkedListInternal->m_nCount);
+        pDialog->
     }
     else 
     {
