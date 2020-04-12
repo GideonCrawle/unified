@@ -107,8 +107,12 @@ void Dialog::Hooks::SendDialogEntry(bool before, CNWSDialog *pThis,
     {
         statestack[++ssp] = DIALOG_STATE_SEND_ENTRY;
         idxEntry = iEntry;
-        pDialog->m_pEntries[idxEntry].m_sSpeaker = Utils::AsNWSObject(Utils::GetGameObject(g_plugin->newSpeaker)).m_sTag;
-        LOG_DEBUG("Speaker set to %s", pDialog->m_pEntries[idxEntry].m_sSpeaker);
+        if (g_plugin->newSpeaker != Constants::OBJECT_INVALID)
+        {
+            pDialog->m_pEntries[idxEntry].m_sSpeaker = Utils::AsNWSObject(Utils::GetGameObject(g_plugin->newSpeaker)).m_sTag;
+            LOG_DEBUG("Speaker set to %s", pDialog->m_pEntries[idxEntry].m_sSpeaker);
+            g_plugin->newSpeaker = Constants::OBJECT_INVALID;
+        }
     }
     else ssp--;
 }
