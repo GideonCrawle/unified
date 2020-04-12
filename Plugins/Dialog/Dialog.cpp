@@ -10,7 +10,7 @@
 #include "API/CNWSDialogLinkReply.hpp"
 #include "API/CNWSDialogSpeaker.hpp"
 #include "API/CExoLocString.hpp"
-#include "API/CExoLinkedList.hpp"
+#include "API/CExoLinkedListInternal.hpp"
 #include "API/CExoString.hpp"
 #include "API/CResRef.hpp"
 #include "API/Constants.hpp"
@@ -404,7 +404,7 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
         if (bView) LOG_DEBUG("bView was true!");
         else LOG_DEBUG("bView was false!");
         pDialog->m_bMultiPCDialogViewOnly = true;
-        LOG_DEBUG("Number of players: %n", pDialog->m_lPlayers.m_pcExoLinkedListInternal->Count());
+        LOG_DEBUG("Number of players: %n", pDialog->m_lPlayers.m_pcExoLinkedListInternal->Count);
     }
     else 
     {
