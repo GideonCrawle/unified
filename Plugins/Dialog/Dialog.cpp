@@ -400,7 +400,7 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
     uint32_t numSpeakers = pDialog->m_nSpeakerMap;
     auto* pSpeakers = pDialog->m_pSpeakerMap;
 
-    if (pSpeakers != nullptr) delete pSpeakers;
+    //if (pSpeakers != nullptr) delete pSpeakers;
     
     pSpeakers = new CNWSDialogSpeaker;
     pSpeakers->m_id = oidObject;
