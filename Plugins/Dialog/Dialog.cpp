@@ -411,7 +411,11 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
     LOG_DEBUG("Speaker map size is %n", pDialog->m_nSpeakerMap); 
     pDialog->m_pSpeakerMap = pSpeakers;
 
-    if (pAddr != nullptr) delete[] pAddr;
+    if (pAddr != nullptr) {
+        LOG_DEBUG("pAddr was not nullptr!");
+        delete[] pAddr;
+    }
+    else LOG_DEBUG("pAddr was nullptr!");
 
     return Services::Events::Arguments();
 }
