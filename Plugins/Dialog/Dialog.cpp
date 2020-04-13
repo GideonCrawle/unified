@@ -413,7 +413,7 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
 
     if (pAddr != nullptr) {
         LOG_DEBUG("pAddr was not nullptr!");
-        delete[] pAddr;
+        delete pAddr;
     }
     else LOG_DEBUG("pAddr was nullptr!");
 
