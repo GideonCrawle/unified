@@ -398,16 +398,16 @@ ArgumentStack Dialog::SetNPCSpeaker(ArgumentStack&& args)
     
     g_plugin->newSpeaker = oidObject;
     uint32_t numSpeakers = pDialog->m_nSpeakerMap;
-    CNWSDialogSpeaker** pSpeakers = &(pDialog->m_pSpeakerMap);
+    CNWSDialogSpeaker* pSpeakers = pDialog->m_pSpeakerMap;
 
-    if (pSpeakers != nullptr) delete[] *pSpeakers;
+    if (pSpeakers != nullptr) delete[] pDialog->m_pSpeakerMap;
     LOG_DEBUG("Deleted pSpeakers");
-    *pSpeakers = new CNWSDialogSpeaker;   
+    pSpeakers = new CNWSDialogSpeaker;   
     LOG_DEBUG("New DialogSpeaker created");
-    *pSpeakers->m_id = oidObject;
-    LOG_DEBUG("New id: %n", *pSpeakers->m_id);
-    *pSpeakers->m_sSpeaker = Utils::AsNWSObject(Utils::GetGameObject(oidObject))->m_sTag;
-    LOG_DEBUG("New tag: %s", *pSpeakers->m_sSpeaker);
+    pSpeakers->m_id = oidObject;
+    LOG_DEBUG("New id: %n", pSpeakers->m_id);
+    pSpeakers->m_sSpeaker = Utils::AsNWSObject(Utils::GetGameObject(oidObject))->m_sTag;
+    LOG_DEBUG("New tag: %s", pSpeakers->m_sSpeaker);
     pDialog->m_nSpeakerMap = 1;
     LOG_DEBUG("Speaker map size is %n", pDialog->m_nSpeakerMap);       
 
